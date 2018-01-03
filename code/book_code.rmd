@@ -11,5 +11,4 @@ We are going use "gapminder" data to learn `dplyr`. It's going to be amazing.
 
 ```{r first chunck}
 x <- seq(1:15)
-
 ```
