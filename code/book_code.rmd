@@ -14,3 +14,40 @@ x <- seq(1:15)
 
 norm_x <- rnorm(5, 0.1)
 ```
+
+# Chapter 5
+
+## ggplot2
+
+```{r ggplot2}
+library(tidyverse)
+data(mpg)
+head(mpg)
+mpg
+
+# Assign plot to a variable
+car_plot <- ggplot(data = mpg, aes(x = displ, y = hwy))
+# Draw the plot
+car_plot +
+geom_point()
+
+#we start modifying this plot to extract more information from it. For instance, we can add transparency #(alpha) to avoid overplotting:
+car_plot + 
+  geom_point(alpha = 0.4)
+
+###Or to color each species in the plot differently:
+ggplot(data = mpg, aes(x = displ, y = hwy)) +
+geom_point(aes(color = class))
+```
+
+```{r Exercise 5.5.1}
+
+#Make a scatterplot of hwy vs cty with different size points representing each car class and different colors for each fuel type.
+
+#We get a warning here, because mapping an unordered variable (class) to an ordered aesthetic (size) is not a good idea.
+ggplot(data = mpg) +
+geom_point(mapping = aes(x = cty, y = hwy, size = class, color = fl))
+
+
+```
+
