@@ -9,7 +9,7 @@ output: html_document
 
 We are going use "gapminder" data to learn `dplyr`. It's going to be amazing.
 
-```{r first chunck}
+```{r first chunk}
 x <- seq(1:15)
 
 norm_x <- rnorm(5, 0.1)
@@ -38,6 +38,16 @@ car_plot +
 ###Or to color each species in the plot differently:
 ggplot(data = mpg, aes(x = displ, y = hwy)) +
 geom_point(aes(color = class))
+
+### In the above example, we mapped class to the color aesthetic, but we could have mapped class to the
+### shape aesthetic in the same way. In this case, the shape of each point would reveal its class affiliation.
+ggplot(data = mpg) +
+geom_point(mapping = aes(x = displ, y = hwy, shape = class))
+
+### Is the mapping argument necessary?
+ggplot(data = mpg) +
+geom_point(aes(x = displ, y = hwy, shape = class))
+### NO!!!
 ```
 
 ```{r Exercise 5.5.1}
@@ -48,6 +58,46 @@ geom_point(aes(color = class))
 ggplot(data = mpg) +
 geom_point(mapping = aes(x = cty, y = hwy, size = class, color = fl))
 
+### The color of points as a character string
+ggplot(data = mpg, aes(x = displ, y = hwy)) +
+geom_point(alpha = 0.4, color = "blue")
 
+### The size of a point in mm
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(alpha = 0.4, size = 3)
+
+### The shape of a point as a number
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(alpha = 0.4, shape = 9)
+```
+
+```{r Exercise 5.5.2}
+# 1.
+### what's gone wrong with this code?
+ggplot(data = mpg) +
+geom_point(aes(x = displ, y = hwy, color = "blue"))
+### The color is in the aesthetics function
+
+### Let's fix it!
+ggplot(data = mpg) +
+geom_point(aes(x = displ, y = hwy), color = "blue")
+
+# 2.
+### Plot hwy vs displ and have the point color to indicate cty mpg.
+ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy, color = cty))
+
+# 3.
+### Now instead of using color, use shape to indicate cty mpg
+ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy, shape = cty))
+
+### Why are these two aesthetics behaving differently?
+# Because we used a continuous to map something discrete... shape!
+
+# 4. 
+### What happens if you map an aesthetic to something other than a variable name, like aes(colour = displ < 5)?
+ggplot(data = mpg) + 
+  geom_point(aes(x = displ, y = hwy, color = displ <5))
 ```
 
